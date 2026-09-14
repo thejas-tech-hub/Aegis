@@ -1,0 +1,42 @@
+[
+    {
+        "id": "txn_001",
+        "date": "2026-09-01",
+        "vendor": "Netflix",
+        "amount": 649,
+        "currency": "INR",
+        "category": "subscription",
+        "type": "recurring",
+        "status": "posted"
+    },
+    {
+        "id": "txn_002",
+        "date": "2026-09-03",
+        "vendor": "BESCOM",
+        "amount": 2340,
+        "currency": "INR",
+        "category": "utilities",
+        "type": "recurring",
+        "status": "posted"
+    },
+    {
+        "id": "txn_003",
+        "date": "2026-09-05",
+        "vendor": "ACT Fibernet",
+        "amount": 999,
+        "currency": "INR",
+        "category": "utilities",
+        "type": "recurring",
+        "status": "posted"
+    },
+    {
+        "id": "txn_004",
+        "date": "2026-09-08",
+        "vendor": "Unknown Vendor",
+        "amount": 4850,
+        "currency": "INR",
+        "category": "unknown",
+        "type": "one_time",
+        "status": "posted"
+    }
+]
