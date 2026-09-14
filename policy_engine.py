@@ -19,21 +19,30 @@ def evaluate_transaction(transaction: dict) -> dict:
     amount = transaction["amount"]
     category = transaction["category"]
 
+    reasons = []
+
     if amount > policy["auto_pay_ceiling"]:
-        return {
-            "decision": "REVIEW",
-            "reason": f"Amount ₹{amount} exceeds the automatic payment ceiling of ₹{policy['auto_pay_ceiling']}."
-        }
+        reasons.append(
+            f"Amount ₹{amount} exceeds the automatic payment ceiling "
+            f"of ₹{policy['auto_pay_ceiling']}."
+        )
 
     if category not in policy["allowed_categories"]:
+        reasons.append(
+            f"Category '{category}' is not allowed for automatic payment."
+        )
+
+    if reasons:
         return {
             "decision": "REVIEW",
-            "reason": f"Category '{category}' is not allowed for automatic payment."
+            "reasons": reasons
         }
 
     return {
         "decision": "ALLOW",
-        "reason": "Transaction satisfies the current household policy."
+        "reasons": [
+            "Transaction satisfies the current household policy."
+        ]
     }
 def evaluate_all_transactions(transactions: list[dict]) -> list[dict]:
     """Evaluate every transaction against the household policy."""
@@ -45,7 +54,7 @@ def evaluate_all_transactions(transactions: list[dict]) -> list[dict]:
         results.append({
             "transaction": transaction,
             "decision": decision["decision"],
-            "reason": decision["reason"]
+            "reasons": decision["reasons"]
         })
 
     return results
@@ -58,5 +67,6 @@ if __name__ == "__main__":
 
         print(f"{transaction['vendor']} — ₹{transaction['amount']}")
         print(f"Decision: {result['decision']}")
-        print(f"Reason: {result['reason']}")
+        for reason in result["reasons"]:
+            print(f"Reason: {reason}")
         print()
