@@ -1,0 +1,8 @@
+{
+  "auto_pay_ceiling": 5000,
+  "allowed_categories": [
+    "utilities",
+    "subscription"
+  ],
+  "variance_threshold_percent": 15
+}
