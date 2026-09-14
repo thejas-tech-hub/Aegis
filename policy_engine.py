@@ -6,6 +6,12 @@ def load_policy() -> dict:
 
     with open(policy_path, "r", encoding="utf-8") as file:
         return json.load(file)
+def load_transactions() -> list[dict]:
+    """Load household transactions from the local ledger."""
+    data_path = Path(__file__).parent / "data" / "transactions.json"
+
+    with open(data_path, "r", encoding="utf-8") as file:
+        return json.load(file)
 def evaluate_transaction(transaction: dict) -> dict:
     """Determine whether a transaction can be handled automatically."""
     policy = load_policy()
@@ -29,11 +35,28 @@ def evaluate_transaction(transaction: dict) -> dict:
         "decision": "ALLOW",
         "reason": "Transaction satisfies the current household policy."
     }
+def evaluate_all_transactions(transactions: list[dict]) -> list[dict]:
+    """Evaluate every transaction against the household policy."""
+    results = []
+
+    for transaction in transactions:
+        decision = evaluate_transaction(transaction)
+
+        results.append({
+            "transaction": transaction,
+            "decision": decision["decision"],
+            "reason": decision["reason"]
+        })
+
+    return results
 if __name__ == "__main__":
-    test_transaction = {
-    "vendor": "Unknown Vendor",
-    "amount": 4850,
-    "category": "unknown"
-}
-    decision = evaluate_transaction(test_transaction)
-    print(decision)
+    transactions = load_transactions()
+    results = evaluate_all_transactions(transactions)
+
+    for result in results:
+        transaction = result["transaction"]
+
+        print(f"{transaction['vendor']} — ₹{transaction['amount']}")
+        print(f"Decision: {result['decision']}")
+        print(f"Reason: {result['reason']}")
+        print()
