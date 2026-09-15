@@ -1,0 +1,44 @@
+[
+    {
+        "raw_text": "BESCOM Electricity Bill for Sep 2026. Amount Due: Rs 2340. Due Date: 15-Sep-2026.",
+        "vendor_hint": "BESCOM",
+        "amount_hint": 2340,
+        "currency_hint": "INR",
+        "due_date_hint": "2026-09-15",
+        "category_hint": "utilities",
+        "recurring_hint": true,
+        "confidence_hint": 0.95,
+        "source_hint": "synthetic"
+    },
+    {
+        "raw_text": "Netflix subscription renewed. Amount: Rs 649. Next billing date: 01-Oct-2026.",
+        "vendor_hint": "Netflix",
+        "amount_hint": 649,
+        "currency_hint": "INR",
+        "due_date_hint": "2026-10-01",
+        "category_hint": "subscription",
+        "recurring_hint": true,
+        "confidence_hint": 0.99,
+        "source_hint": "synthetic"
+    },
+    {
+        "raw_text": "Payment request from Unknown Merchant. Amount: Rs 4850. Due: 20-Sep-2026.",
+        "vendor_hint": "Unknown Merchant",
+        "amount_hint": 4850,
+        "currency_hint": "INR",
+        "due_date_hint": "2026-09-20",
+        "recurring_hint": false,
+        "source_hint": "synthetic"
+    },
+    {
+        "raw_text": "ACT Fibernet broadband invoice. Amount: Rs 999. Due: 10-Sep-2026.",
+        "vendor_hint": "ACT Fibernet",
+        "amount_hint": 999,
+        "currency_hint": "INR",
+        "due_date_hint": "2026-09-10",
+        "category_hint": "utilities",
+        "recurring_hint": true,
+        "confidence_hint": 0.90,
+        "source_hint": "synthetic"
+    }
+]
