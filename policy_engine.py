@@ -1,4 +1,5 @@
 import json
+import math
 from pathlib import Path
 def load_policy() -> dict:
     """Load the household's financial safety policy."""
@@ -13,13 +14,35 @@ def load_transactions() -> list[dict]:
     with open(data_path, "r", encoding="utf-8") as file:
         return json.load(file)
 def evaluate_transaction(transaction: dict) -> dict:
-    """Determine whether a transaction can be handled automatically."""
-    policy = load_policy()
+    """Determine whether a transaction can be handled automatically.
+
+    Raises ValueError if the transaction is not a dict, or if required
+    fields ('amount', 'category') are missing or have invalid types.
+    """
+    if not isinstance(transaction, dict):
+        raise ValueError("transaction must be a dict.")
+
+    if "amount" not in transaction:
+        raise ValueError("transaction is missing required field 'amount'.")
+    if "category" not in transaction:
+        raise ValueError("transaction is missing required field 'category'.")
 
     amount = transaction["amount"]
+    if isinstance(amount, bool) or not isinstance(amount, (int, float)):
+        raise ValueError("transaction 'amount' must be a number.")
+    if not math.isfinite(amount):
+        raise ValueError("transaction 'amount' must be a finite number.")
+
     category = transaction["category"]
+    if not isinstance(category, str):
+        raise ValueError("transaction 'category' must be a string.")
+
+    policy = load_policy()
 
     reasons = []
+
+    if amount < 0:
+        reasons.append("Transaction amount cannot be negative.")
 
     if amount > policy["auto_pay_ceiling"]:
         reasons.append(
@@ -45,7 +68,13 @@ def evaluate_transaction(transaction: dict) -> dict:
         ]
     }
 def evaluate_all_transactions(transactions: list[dict]) -> list[dict]:
-    """Evaluate every transaction against the household policy."""
+    """Evaluate every transaction against the household policy.
+
+    Raises ValueError if transactions is not a list.
+    """
+    if not isinstance(transactions, list):
+        raise ValueError("transactions must be a list.")
+
     results = []
 
     for transaction in transactions:
